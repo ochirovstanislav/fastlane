@@ -1530,25 +1530,18 @@ func getProvisioningProfile(adhoc: Bool = false,
                             platform: String = "ios",
                             readonly: Bool = false,
                             templateName: String? = nil) {
-  let command = RubyCommand(commandID: "", methodName: "get_provisioning_profile", className: nil, args: [RubyCommand.Argument(name: "adhoc", value: adhoc),
-                                                                                                          RubyCommand.Argument(name: "development", value: development),
-                                                                                                          RubyCommand.Argument(name: "skip_install", value: skipInstall),
-                                                                                                          RubyCommand.Argument(name: "force", value: force),
-                                                                                                          RubyCommand.Argument(name: "app_identifier", value: appIdentifier),
-                                                                                                          RubyCommand.Argument(name: "username", value: username),
-                                                                                                          RubyCommand.Argument(name: "team_id", value: teamId),
-                                                                                                          RubyCommand.Argument(name: "team_name", value: teamName),
-                                                                                                          RubyCommand.Argument(name: "provisioning_name", value: provisioningName),
-                                                                                                          RubyCommand.Argument(name: "ignore_profiles_with_different_name", value: ignoreProfilesWithDifferentName),
-                                                                                                          RubyCommand.Argument(name: "output_path", value: outputPath),
-                                                                                                          RubyCommand.Argument(name: "cert_id", value: certId),
-                                                                                                          RubyCommand.Argument(name: "cert_owner_name", value: certOwnerName),
-                                                                                                          RubyCommand.Argument(name: "filename", value: filename),
-                                                                                                          RubyCommand.Argument(name: "skip_fetch_profiles", value: skipFetchProfiles),
-                                                                                                          RubyCommand.Argument(name: "skip_certificate_verification", value: skipCertificateVerification),
-                                                                                                          RubyCommand.Argument(name: "platform", value: platform),
-                                                                                                          RubyCommand.Argument(name: "readonly", value: readonly),
-                                                                                                          RubyCommand.Argument(name: "template_name", value: templateName)])
+    
+    var args: [RubyCommand.Argument] = [
+        RubyCommand.Argument(name: "app_identifier", value: appIdentifier),
+        RubyCommand.Argument(name: "username", value: username),
+        RubyCommand.Argument(name: "output_path", value: outputPath),
+        RubyCommand.Argument(name: "platform", value: platform),
+        ]
+    if adhoc { args.append(RubyCommand.Argument(name: "adhoc", value: adhoc)) }
+    if development { args.append(RubyCommand.Argument(name: "development", value: development)) }
+    if skipInstall { args.append(RubyCommand.Argument(name: "skip_install", value: skipInstall)) }
+    if force { args.append(RubyCommand.Argument(name: "force", value: force)) }
+    let command = RubyCommand(commandID: "", methodName: "get_provisioning_profile", className: nil, args: args)
   _ = runner.executeCommand(command)
 }
 func getPushCertificate(development: Bool = false,
